@@ -35,19 +35,27 @@ Tom MacWright has a [helpful blog post with a comparison between DAT and IPFS](h
 
 It's also easy to install: via [Beaker](https://beakerbrowser.com/) knows how to open dat:// links to content on the DAT network.
 
+Some DAT projects:
+
 [Fritter](dat://fritter.hashbase.io) is a prototype Twitter clone on DAT. No image support.
 
 ![](https://i.imgur.com/jupjifV.png)
 
 [Rotonde](https://louis.center/p2p-social-networking/) is a social network built on DAT.
 
+Used by a small community. Supports sharing images.
+
 ![](https://louis.center/p2p-social-networking/library.png)
+
+Services like [Hashbase](https://hashbase.io/pricing) exist where you can pin DAT content for a fee.
 
 ### Scuttlebutt
 
-Clients discover each other a LAN with multicast UDP and "gossip" the social network's data with other people they follow. Projects like [MinBase](https://github.com/evbogue/minbase) could form the basis for a simple and minimal server run by each rpi. All backpacks could, when they have internet access, join a specific [pub server](https://github.com/ssbc/scuttlebot/wiki/Pub-Servers) so that they know to sync with each other.
+Clients discover each other a LAN with multicast UDP and "gossip" the social network's data with other people they follow. Projects like [MinBase](https://github.com/evbogue/minbase) could form the basis for a simple and minimal server run by each rpi. [Patchwork](https://github.com/ssbc/patchwork) is a solid, themable client. All backpacks could, when they have internet access, join a specific [pub server](https://github.com/ssbc/scuttlebot/wiki/Pub-Servers) so that they know to sync with each other.
 
 A major con would be that to be recognized as a unique "person" on Scuttlebutt, you'd need to run a client--i.e., if everyone whose phones are connected to a backpack uses its scuttlebutt instance, everyone is "posting" as the same identity. Not sure this is actually a problem for our use-case though...
+
+![](https://github.com/ssbc/patchwork/raw/master/screenshot.jpg)
 
 ### Mastodon
 
@@ -70,4 +78,3 @@ A small library for synchronizing state across webpages. Small opinionated frame
 Dhruv Mehrotra's [OtherNet](http://othernet.xyz) in Bedstuy and Bushwick.
 
 [Hyperboria](https://docs.meshwith.me/) has resources on "meshlocals."
-
