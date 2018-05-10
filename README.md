@@ -57,6 +57,85 @@ A major con would be that to be recognized as a unique "person" on Scuttlebutt, 
 
 ![](https://github.com/ssbc/patchwork/raw/master/screenshot.jpg)
 
+#### Raspberry Pi Installation
+
+Currently no ARM7 binaries exist for an easy installation of Patchwork/SSB--there's an [issue
+for that](https://github.com/ssbc/patchwork/issues/745).
+
+There's also issues running electron apps with the newest version of
+electron--[this thread](https://github.com/electron/electron/issues/10468) was
+helpful in finding an electron version that actually worked.
+
+Here's the install process:
+
+```
+# add github.com to known_hosts
+ssh-keyscan github.com
+
+# upgrade node and npm
+sudo apt-get remove nodejs
+sudo apt update
+sudo apt full-upgrade -y
+curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+sudo apt install -y nodejs
+npm install -g npm
+
+# increase swapfile size for compiling patchwork
+sudo vi /etc/dphys-swapfile
+
+# in the file above, uncomment the CONF_SWAPSIZE and make it read:
+CONF_SWAPSIZE=1024
+
+# modify package.json to use an older version of electron
+vim package.json
+
+# edit the "electron" entry in the "devDependencies" section to read
+"electron": "~1.7.9"
+
+# install patchwork
+git clone https://github.com/ssbc/patchwork
+cd patchwork
+npm install
+npm start
+```
+
+After a long time, patchwork should appear on screen. Unfortunately, it looks
+like the CPU usage on my RPI 2 is pretty unusable. Connecting to a pub and
+syncing messages, which usually takes a few seconds on a laptop, took 15+
+minutes on the RPI.
+
+Additionally, after digging into the source to see how feasible a "headless"
+mode might be, where clients might be able to connect to a website and post
+on behalf of the backpack, it looks like the code is pretty reliant on being
+an electron-first app, instead of a hybrid app layering native functionality
+on top of an HTML-first app.
+
+I also saw that a more minimal SSB client called
+[minbase](https://github.com/evbogue/minbase) was linked to from on the
+patchwork github, so I tried installing that:
+
+```
+cd ~
+git clone https://github.com/evbogue/minbase.git
+cd minbase
+npm install
+npm run build
+npm start
+```
+
+Unfortunately there were errors:
+
+```
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at validateHeader (_http_outgoing.js:503:11)
+    at ServerResponse.setHeader (_http_outgoing.js:510:3)
+    at /home/pi/Downloads/minbase/node_modules/decent-ssb/plugins/ws/json-api.js:23:11
+```
+
+I posted an [issue in their tracker](https://github.com/evbogue/minbase/issues/5).
+
+So for now, SSB on rpi with an easy client is a no go.
+
 ### Mastodon
 
 Decentralized microblogging with federation. Relies on DNS. Skinnable, each backpack could run an instance and know to find and federate with the other instances when they are on the internet. Supports photos and private messages.
